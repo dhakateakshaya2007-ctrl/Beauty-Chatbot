@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Beauty Bot</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(to right, #e6a4a4, #d89ca2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.chat-container {
+    width: 320px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.header {
+    background: #f0627f;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 18px;
+}
+
+.chat-box {
+    height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 10px;
+    max-width: 80%;
+}
+
+.user {
+    background: #f5a5af;
+    align-self: flex-end;
+}
+
+.bot {
+    background: #eaeaea;
+    align-self: flex-start;
+}
+
+.input-area {
+    display: flex;
+    border-top: 1px solid #ccc;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+}
+
+button {
+    background: #f0627f;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <div class="header">💄 Beauty Bot</div>
+
+    <div class="chat-box" id="chatBox">
+        <div class="message bot">
+            Hi! I am your Beauty Bot 💕 Ask me about skincare, makeup, or tips!
+        </div>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKey(event)">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+</div>
+
+<script>
+
+function handleKey(event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+}
+
+function sendMessage() {
+    let input = document.getElementById("userInput");
+    let msg = input.value.trim();
+    if (msg === "") return;
+
+    addMessage(msg, "user");
+
+    setTimeout(() => {
+        let reply = getReply(msg);
+        addMessage(reply, "bot");
+    }, 500);
+
+    input.value = "";
+}
+
+function addMessage(text, type) {
+    let chatBox = document.getElementById("chatBox");
+
+    let div = document.createElement("div");
+    div.className = "message " + type;
+    div.innerText = text;
+
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function getReply(msg) {
+    msg = msg.toLowerCase();
+
+    if (msg.includes("hello") || msg.includes("hi")) {
+        return "Hello beautiful 💖 How can I help you?";
+    }
+
+    if (msg.includes("primer")) {
+        return "Use primer before foundation to make your makeup smooth and long-lasting 💄";
+    }
+
+    if (msg.includes("lipgloss") || msg.includes("lip")) {
+        return "Try nude or brown lip gloss shades for a natural look ✨";
+    }
+
+    if (msg.includes("skin")) {
+        return "Cleanse, moisturize, and always use sunscreen ☀️";
+    }
+
+    if (msg.includes("acne")) {
+        return "Use salicylic acid facewash and avoid oily products 😊";
+    }
+
+    if (msg.includes("makeup")) {
+        return "Start with primer → foundation → compact → lipstick 💄";
+    }
+
+    if (msg.includes("hair")) {
+        return "Oil your hair weekly and avoid too much heat styling 🔥";
+    }
+
+    return "I'm still learning 💕 Ask me about skincare, makeup, or hair care!";
+}
+
+</script>
+
+</body>
+</html>
